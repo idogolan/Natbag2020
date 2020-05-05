@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 import javax.annotation.processing.FilerException;
 
+//git commit test - roman
+
 public class Flight {
 
 	private String startLocation;
