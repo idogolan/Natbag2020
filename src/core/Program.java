@@ -42,7 +42,7 @@ public class Program {
 			System.out.println(flights + "\n");
 			return true;
 		case "4":
-			flights = read("fligths.txt");
+			read("fligths.txt", flights);
 			return true;
 		case "5":
 			save(flights);
@@ -126,15 +126,15 @@ public class Program {
 		pw.close();
 	}
 
-	public static ArrayList<Flight> read(String fileName) throws FileNotFoundException, FilerException {
-		ArrayList<Flight> list = new ArrayList<Flight>();
+	public static void read(String fileName, ArrayList<Flight> list) throws FileNotFoundException, FilerException {
+		list.clear();
 		File f = new File(fileName);
 		Scanner s = new Scanner(f);
 		int sum = s.nextInt();
 		for (int i = 0; i < sum; i++) {
+			s.nextLine();
 			list.add(new Flight(f, s));
 			s.nextLine();
 		}
-		return list;
 	}
 }

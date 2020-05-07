@@ -1,15 +1,22 @@
-2
-a
-aa
-a
-a
-2020 12 20
-20 20
+3
+Arkia
+BA 350
+Spain
+Israel
+2020 8 15
+5 20
 
-asdsa
-asdas
-ada
-asdas
-2020 2 2
-2 2
+El-Al
+ED 669
+Israel
+Thailand
+2020 9 20
+10 30
+
+El-Al
+AD 250
+Italy
+Israel
+2020 10 25
+20 30
 
