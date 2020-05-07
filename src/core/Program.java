@@ -78,7 +78,7 @@ public class Program {
 	}
 
 	public static void addFlight(Scanner scan, ArrayList<Flight> flights) {
-		String start, end, company, number;
+		String start, end, company, number, direction;
 		String year, month, day, hour, minute;
 		System.out.println("Please enter number flight: ");
 		number = scan.nextLine();

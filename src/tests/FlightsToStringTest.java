@@ -19,7 +19,7 @@ public class FlightsToStringTest {
 		// Flight number: ED 927 From: ISR To: THI At: 2020-04-07 05:30:00 With El-Al
 		expectedResult.append("Flight number: ");
 		expectedResult.append("ED 927");
-		expectedResult.append(" From: ");
+		expectedResult.append(" Departures From: ");
 		expectedResult.append("ISR");
 		expectedResult.append(" To: ");
 		expectedResult.append("THI");

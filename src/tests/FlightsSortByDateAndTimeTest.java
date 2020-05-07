@@ -35,7 +35,7 @@ public class FlightsSortByDateAndTimeTest {
 
 		assertEquals(expectedResult.toString(), flightsForTest.toString());
 	}
-	
+
 	@Test
 	public void monthTest() {
 		ArrayList<Flight> flightsForTest = new ArrayList<>();
@@ -59,7 +59,7 @@ public class FlightsSortByDateAndTimeTest {
 
 		assertEquals(expectedResult.toString(), flightsForTest.toString());
 	}
-	
+
 	@Test
 	public void yearTest() {
 		ArrayList<Flight> flightsForTest = new ArrayList<>();
@@ -83,7 +83,7 @@ public class FlightsSortByDateAndTimeTest {
 
 		assertEquals(expectedResult.toString(), flightsForTest.toString());
 	}
-	
+
 	@Test
 	public void hourTest() {
 		ArrayList<Flight> flightsForTest = new ArrayList<>();
@@ -107,7 +107,7 @@ public class FlightsSortByDateAndTimeTest {
 
 		assertEquals(expectedResult.toString(), flightsForTest.toString());
 	}
-	
+
 	@Test
 	public void minuteTest() {
 		ArrayList<Flight> flightsForTest = new ArrayList<>();
@@ -131,7 +131,7 @@ public class FlightsSortByDateAndTimeTest {
 
 		assertEquals(expectedResult.toString(), flightsForTest.toString());
 	}
-	
+
 	@Test
 	public void sameDateAndTimeTest() {
 		ArrayList<Flight> flightsForTest = new ArrayList<>();
@@ -155,7 +155,7 @@ public class FlightsSortByDateAndTimeTest {
 
 		assertEquals(expectedResult.toString(), flightsForTest.toString());
 	}
-	
+
 	@Test
 	public void totalTest() {
 		ArrayList<Flight> flightsForTest = new ArrayList<>();

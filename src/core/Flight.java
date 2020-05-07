@@ -10,31 +10,33 @@ import java.util.Scanner;
 
 import javax.annotation.processing.FilerException;
 
-
 public class Flight {
 
 	private String startLocation;
-	private String endLocation;
+	private String destination;
 	private LocalDate flightDate;
 	private Time flightTime;
 	private String flightNumber;
 	private String company;
+	private String direction;
 
 	public Flight(String startLocation, String endLocation, LocalDate flightDate, Time flightTime, String flightNumber,
 			String company) {
 		this.startLocation = startLocation;
-		this.endLocation = endLocation;
+		this.destination = endLocation;
 		this.flightDate = flightDate;
 		this.flightTime = flightTime;
 		this.flightNumber = flightNumber;
 		this.company = company;
+		setDirection();
 	}
 
-	public Flight(File f, Scanner s) throws FilerException {///////////////////////////
+	public Flight(File f, Scanner s) throws FilerException {
 		this.company = s.nextLine();
 		this.flightNumber = s.nextLine();
 		this.startLocation = s.nextLine();
-		this.endLocation = s.nextLine();
+		this.destination = s.nextLine();
+		this.direction = s.nextLine();
 		int year = s.nextInt();
 		int month = s.nextInt();
 		int day = s.nextInt();
@@ -44,15 +46,23 @@ public class Flight {
 		this.flightTime = new Time(hour, min, 0);
 	}
 
+	private void setDirection() {
+		if (startLocation.equals("Isreal") || startLocation.equals("ISR") || startLocation.equals("isreal"))
+			direction = "Departures";
+		else
+			direction = "Arrivals";
+	}
+
 	public void Save(PrintWriter pw) throws FileNotFoundException {
 		pw.println(company);
 		pw.println(flightNumber);
 		pw.println(startLocation);
-		pw.println(endLocation);
+		pw.println(destination);
+		pw.println(direction);
 		pw.print(flightDate.getYear() + " ");
 		pw.print(flightDate.getMonthValue() + " ");
 		pw.println(flightDate.getDayOfMonth());
-		pw.print(flightTime.getHours()+" ");
+		pw.print(flightTime.getHours() + " ");
 		pw.println(flightTime.getMinutes());
 	}
 
@@ -62,7 +72,11 @@ public class Flight {
 
 	public String getEndLocation() {
 
-		return endLocation;
+		return destination;
+	}
+
+	public String getDirection() {
+		return direction;
 	}
 
 	public LocalDate getFlightTime() {
@@ -80,33 +94,14 @@ public class Flight {
 	}
 
 	public int comperTo(Flight other) {
-		if (this.flightDate.getYear() < other.flightDate.getYear())
-			return -1;
-		else if (this.flightDate.getYear() == other.flightDate.getYear()) {
-			if (this.flightDate.getMonthValue() < other.flightDate.getMonthValue())
-				return -1;
-			else if (this.flightDate.getMonthValue() == other.flightDate.getMonthValue()) {
-				if (this.flightDate.getDayOfMonth() < other.flightDate.getDayOfMonth())
-					return -1;
-				else if (this.flightDate.getDayOfMonth() == other.flightDate.getDayOfMonth()) {
-					if (this.flightTime.getHours() < other.flightTime.getHours())
-						return -1;
-					else if (this.flightTime.getHours() == other.flightTime.getHours()) {
-						if (this.flightTime.getMinutes() < other.flightTime.getMinutes())
-							return -1;
-						else
-							return 0;
-					} else
-						return 1;
-				}
-			} else
-				return 1;
-		}
-		return 1;
+		if (this.flightDate.compareTo(other.flightDate) == 0) {
+			return this.flightTime.compareTo(other.flightTime);
+		} else
+			return this.flightDate.compareTo(other.flightDate);
 	}
 
 	public String toString() {
-		return "Flight number: " + flightNumber + " From: " + startLocation + " To: " + endLocation + " At: "
-				+ flightDate + " " + flightTime + " With " + company + "\n";
+		return "Flight number: " + flightNumber + " " + direction + " From: " + startLocation + " To: " + destination
+				+ " At: " + flightDate + " " + flightTime + " With " + company + "\n";
 	}
 }
