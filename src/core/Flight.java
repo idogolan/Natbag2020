@@ -94,6 +94,10 @@ public class Flight {
 		return false;
 	}
 	
+	public LocalDate getFlightDate() {
+		return flightDate;
+	}
+
 	// date and Time compare
 	public int compareTo(Flight other) {
 		if (this.flightDate.compareTo(other.flightDate) == 0) {

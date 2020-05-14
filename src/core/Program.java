@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -164,5 +165,14 @@ public class Program {
 			}
 		}
 		return res;
+	}
+	
+	public static ArrayList<Flight> sortByDate ( ArrayList<Flight> flights,LocalDate begining, LocalDate end){
+		ArrayList<Flight> newList = new ArrayList<Flight>();
+		for(Flight f : flights) {
+			if ((f.getFlightDate().compareTo(begining)<=0) && (f.getFlightDate().compareTo(end)>=0))
+				newList.add(f);
+		}
+		return newList;
 	}
 }
