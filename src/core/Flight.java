@@ -89,12 +89,13 @@ public class Flight {
 	}
 
 	public boolean equals(Flight other) {
-		if (this.comperTo(other) == 0)
+		if (this.compareTo(other) == 0)
 			return true;
 		return false;
 	}
-
-	public int comperTo(Flight other) {
+	
+	// date and Time compare
+	public int compareTo(Flight other) {
 		if (this.flightDate.compareTo(other.flightDate) == 0) {
 			return this.flightTime.compareTo(other.flightTime);
 		} else
