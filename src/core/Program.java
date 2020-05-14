@@ -55,18 +55,32 @@ public class Program {
 			return true;
 		}
 	}
-
+	
+	//sort the current list by date and time 
 	public static void sortByDateAndTime(ArrayList<Flight> flights) {
 		Comparator<Flight> comparatorByDate = new Comparator<Flight>() {
 			public int compare(Flight o1, Flight o2) {
-				return o1.comperTo(o2);
+				return o1.compareTo(o2);
 
 			}
 		};
 
 		Collections.sort(flights, comparatorByDate);
 	}
-
+	
+	// return list by direction, 1 for Departures, 2 for Arrivals, other for both
+	public static ArrayList<Flight> sortByDirection(ArrayList<Flight> flights, int kind) {
+		ArrayList<Flight> list = new ArrayList<Flight>();
+		for(Flight f : flights) {
+			if(f.getDirection().equals(Flight.DEPARTURES) && kind!=2)
+				list.add(f);
+			if(f.getDirection().equals(Flight.ARRIVALS) && kind != 1)
+				list.add(f);
+		}
+		return list;
+	}
+	
+	// print menu test for the user 
 	public static void printMenu() {
 		System.out.println("Menu:");
 		System.out.println("1)Show the flight list");
@@ -77,9 +91,10 @@ public class Program {
 		System.out.println("6)exit");
 	}
 
+	// making new flight using user input 
 	public static void addFlight(Scanner scan, ArrayList<Flight> flights) {
-		String start, end, company, number, direction;
-		String year, month, day, hour, minute;
+		String start, end, company, number;
+		int year, month, day, hour, minute;
 		System.out.println("Please enter number flight: ");
 		number = scan.nextLine();
 		System.out.println("Please enter the start location");
@@ -89,32 +104,25 @@ public class Program {
 		System.out.println("Please enter the company name");
 		company = scan.nextLine();
 		System.out.println("Please enter the year");
-		year = scan.nextLine();
+		year = inputOptionCheck(scan, 1900, 2100);
 		System.out.println("Please enter the month");
-		month = scan.nextLine();
+		month = inputOptionCheck(scan, 1,12);
 		System.out.println("Please enter the day");
-		day = scan.nextLine();
+		day = inputOptionCheck(scan,1,31);
 		System.out.println("Please enter the hour");
-		hour = scan.nextLine();
+		hour = inputOptionCheck(scan,1,60);
 		System.out.println("Please enter the minute");
-		minute = scan.nextLine();
+		minute = inputOptionCheck(scan,1,60);
 		LocalDate date;
 		Time time;
-		try {
-			date = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-		} catch (Exception e) {
-			date = LocalDate.now();
-		}
-		try {
-			time = new Time(Integer.parseInt(hour), Integer.parseInt(minute), 0);
-		} catch (Exception e) {
-			time = new Time(0, 0, 0);
-		}
+		date = LocalDate.of(year, month, day);
+		time = new Time(hour, minute, 0);
 
 		flights.add(new Flight(start, end, date, time, number, company));
 		System.out.println("The flight added successfully to the list\n");
 	}
 
+	// save the list to the file
 	public static void save(ArrayList<Flight> flights) throws FileNotFoundException {
 		File f = new File("fligths.txt");
 		PrintWriter pw = new PrintWriter(f);
@@ -126,6 +134,7 @@ public class Program {
 		pw.close();
 	}
 
+	// read from the file and making new list from it
 	public static void read(String fileName, ArrayList<Flight> list) throws FileNotFoundException, FilerException {
 		list.clear();
 		File f = new File(fileName);
@@ -136,5 +145,24 @@ public class Program {
 			list.add(new Flight(f, s));
 			s.nextLine();
 		}
+	}
+	
+	// check Integer input and declined until possible input inserted
+	// making sure the input is Integer type and between Min and Max variables
+	public static int inputOptionCheck(Scanner scan, int min, int max) {
+		int res = 0;
+		boolean repeat = true;
+		while (repeat) {
+			try {
+				res = Integer.parseInt(scan.nextLine());
+				if (res < min || res > max)
+					System.out.println("not valid option: (" + min + "-" + max + ")");
+				else
+					repeat = false;
+			} catch (NumberFormatException e) {
+				System.out.println("not valid input: please enter number");
+			}
+		}
+		return res;
 	}
 }

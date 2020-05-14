@@ -11,6 +11,7 @@ import java.util.Scanner;
 import javax.annotation.processing.FilerException;
 
 public class Flight {
+	public static final String DEPARTURES = "Departures", ARRIVALS = "Arrivals";
 
 	private String startLocation;
 	private String destination;
@@ -48,9 +49,9 @@ public class Flight {
 
 	private void setDirection() {
 		if (startLocation.equals("Isreal") || startLocation.equals("ISR") || startLocation.equals("isreal"))
-			direction = "Departures";
+			direction = DEPARTURES;
 		else
-			direction = "Arrivals";
+			direction = ARRIVALS;
 	}
 
 	public void Save(PrintWriter pw) throws FileNotFoundException {
@@ -88,12 +89,13 @@ public class Flight {
 	}
 
 	public boolean equals(Flight other) {
-		if (this.comperTo(other) == 0)
+		if (this.compareTo(other) == 0)
 			return true;
 		return false;
 	}
-
-	public int comperTo(Flight other) {
+	
+	// date and Time compare
+	public int compareTo(Flight other) {
 		if (this.flightDate.compareTo(other.flightDate) == 0) {
 			return this.flightTime.compareTo(other.flightTime);
 		} else
