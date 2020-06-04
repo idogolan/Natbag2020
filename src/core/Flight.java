@@ -97,6 +97,10 @@ public class Flight {
 	public LocalDate getFlightDate() {
 		return flightDate;
 	}
+	
+	public String getCompany() {
+		return company;
+	}
 
 	// date and Time compare
 	public int compareTo(Flight other) {

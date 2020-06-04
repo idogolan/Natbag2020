@@ -1,6 +1,5 @@
 package core;
 
-import java.awt.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -175,4 +174,14 @@ public class Program {
 		}
 		return newList;
 	}
+	
+	public static ArrayList<Flight> sortByCompany (ArrayList<Flight> flights, String company){
+		ArrayList<Flight> newList = new ArrayList<Flight>();
+		for(Flight f : flights) {
+			if (f.getCompany().equals(company))
+				newList.add(f);
+		}
+		return newList;
+	}
+	
 }
