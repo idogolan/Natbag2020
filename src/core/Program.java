@@ -64,7 +64,6 @@ public class Program {
 
 			}
 		};
-
 		Collections.sort(flights, comparatorByDate);
 	}
 	

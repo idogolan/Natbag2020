@@ -20,7 +20,7 @@ public class FlightsSortByDateAndTimeTest {
 		Flight fly3 = new Flight("ISR", "US", LocalDate.of(2020, 4, 9), new Time(5, 30, 0), "AF 233", "Arkia");
 		flightsForTest.add(fly1);
 		flightsForTest.add(fly2);
-		flightsForTest.add(fly3);//
+		flightsForTest.add(fly3);
 
 		Program.sortByDateAndTime(flightsForTest);// testing this sort. only the days are different
 
