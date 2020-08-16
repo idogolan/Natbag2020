@@ -61,7 +61,6 @@ public class Program {
 		Comparator<Flight> comparatorByDate = new Comparator<Flight>() {
 			public int compare(Flight o1, Flight o2) {
 				return o1.compareTo(o2);
-
 			}
 		};
 		Collections.sort(flights, comparatorByDate);
