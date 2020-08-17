@@ -18,18 +18,23 @@ public class Airport {
 	private String name;
 	private ArrayList<Flight> flightList;
 	private ArrayList<Flight> showing;
-	private boolean arrivals, departures, dateAndTime, company;
-	private String strCompany;
+	private boolean arrivals, departures, dateAndTime, company, rangeOfDatesBegining, rangeOfDatesEnd, country;
+	private int[] days; // index+1 is the day in the week, value 0 => show, else => don't show
+	private String strCompany, strCountry;
+	private LocalDate begining, end;
 
 	public Airport(String name) {
 		if (!setName(name))
 			this.name = NATBAG;
 		flightList = new ArrayList<Flight>();
-		showing = new ArrayList<Flight>();
 		arrivals = true;
 		departures = true;
 		dateAndTime = true;
 		company = false;
+		rangeOfDatesBegining = false;
+		rangeOfDatesEnd = false;
+		days = new int[7];// by default all the values are 0
+		country = false;
 	}
 
 	public boolean addFlight(String start, String end, LocalDate date, Time time, String number, String company) {
@@ -37,7 +42,6 @@ public class Airport {
 			return false;
 		Flight f = new Flight(start, end, date, time, number, company);
 		flightList.add(f);
-		showing.add(f);
 		return true;
 	}
 
@@ -66,7 +70,6 @@ public class Airport {
 			flightList.add(new Flight(f, s));
 			s.nextLine();
 		}
-		showing = new ArrayList<Flight>(flightList);
 	}
 
 	// sort the current list by date and time
@@ -79,6 +82,20 @@ public class Airport {
 		Collections.sort(showing, comparatorByDate);
 	}
 
+	private void sortRangeOfDatesBegining() {
+		for (Flight f : showing) {
+			if (f.getFlightDate().compareTo(begining) > 0)
+				showing.remove(f);
+		}
+	}
+
+	private void sortRangeOfDatesEnd() {
+		for (Flight f : showing) {
+			if (f.getFlightDate().compareTo(end) < 0)
+				showing.remove(f);
+		}
+	}
+
 	private void sortByDirection() {
 		for (Flight f : showing) {
 			if (!arrivals && f.getDirection().equals("Arrivals"))
@@ -88,10 +105,28 @@ public class Airport {
 		}
 	}
 
-	public void sortByCompany() {
+	private void sortByCompany() {
 		for (Flight f : showing) {
 			if (!f.getCompany().equals(strCompany))
 				showing.remove(f);
+		}
+	}
+
+	private void sortByCountry() {
+		for (Flight f : showing) {
+			if (!f.getEndLocation().equals(strCountry))
+				showing.remove(f);
+		}
+	}
+
+	private void sortByDays() {
+		for (int i = 1; i <= days.length; i++) {
+			if (days[i - 1] != 0) {
+				for (Flight f : showing) {
+					if (f.getFlightDate().getDayOfWeek().getValue() == i)
+						showing.remove(f);
+				}
+			}
 		}
 	}
 
@@ -110,15 +145,96 @@ public class Airport {
 		this.departures = departures;
 	}
 
-	public void setDateAndTime(boolean dateAndTime) {
-		this.dateAndTime = dateAndTime;
+	public void setCompany(String str) {
+		if (str != null) {
+			company = true;
+			strCompany = str;
+			return;
+		}
+		company = false;
 	}
 
-	public void setCompany(boolean company, String str) {
-		if (company && str != null) {
-			this.company = company;
-			strCompany = str;
+	public void setCountry(String str) {
+		if (str != null) {
+			country = true;
+			strCountry = str;
+			return;
 		}
+		country = false;
+	}
+
+	public void setRangeOfDatesBegining(LocalDate begining) {
+		if (begining != null) {
+			this.begining = LocalDate.of(begining.getDayOfMonth(), begining.getMonthValue(), begining.getYear());
+			rangeOfDatesBegining = true;
+			return;
+		}
+		rangeOfDatesBegining = false;
+	}
+
+	public void setRangeOfDatesEnd(LocalDate end) {
+		if (end != null) {
+			this.end = LocalDate.of(end.getDayOfMonth(), end.getMonthValue(), end.getYear());
+			rangeOfDatesEnd = true;
+			return;
+		}
+		rangeOfDatesBegining = false;
+	}
+
+	public void setSunday(boolean show) {
+		if (!show) {
+			days[0] = 1;
+			return;
+		}
+		days[0] = 0;
+	}
+
+	public void setMonday(boolean show) {
+		if (!show) {
+			days[1] = 1;
+			return;
+		}
+		days[1] = 0;
+	}
+
+	public void setTuesday(boolean show) {
+		if (!show) {
+			days[2] = 1;
+			return;
+		}
+		days[2] = 0;
+	}
+
+	public void setWednesday(boolean show) {
+		if (!show) {
+			days[3] = 1;
+			return;
+		}
+		days[3] = 0;
+	}
+
+	public void setThursday(boolean show) {
+		if (!show) {
+			days[4] = 1;
+			return;
+		}
+		days[4] = 0;
+	}
+
+	public void setFriday(boolean show) {
+		if (!show) {
+			days[5] = 1;
+			return;
+		}
+		days[5] = 0;
+	}
+
+	public void setSaturday(boolean show) {
+		if (!show) {
+			days[6] = 1;
+			return;
+		}
+		days[6] = 0;
 	}
 
 	public String getName() {
@@ -131,12 +247,20 @@ public class Airport {
 	}
 
 	public ArrayList<Flight> showFlights() {
+		showing = new ArrayList<Flight>(flightList);
 		if (dateAndTime)
 			sortByDateAndTime();
 		if (!arrivals || !departures)
 			sortByDirection();
 		if (company)
 			sortByCompany();
+		if (rangeOfDatesBegining)
+			sortRangeOfDatesBegining();
+		if (rangeOfDatesEnd)
+			sortRangeOfDatesEnd();
+		if (country)
+			sortByCountry();
+		sortByDays();
 		return showing;
 	}
 }
