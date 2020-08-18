@@ -73,7 +73,7 @@ public class Program {
 				airport.setRangeOfDatesEnd(end);
 				again = true;
 			case "7":
-				//left to do 
+				chooseDay(scan, airport);
 				again = true;
 			case "8":
 				airport.setRest();
@@ -151,6 +151,36 @@ public class Program {
 		day = inputOptionCheck(scan, 1, 31);
 		date = LocalDate.of(year, month, day);
 		return date;
+	}
+
+	public static void chooseDay (Scanner scan,Airport airport) {
+		System.out.println("Do you want show sunday? Y/N");
+		airport.setSunday(answer(scan));
+		System.out.println("Do you want show monday? Y/N");
+		airport.setSunday(answer(scan));
+		System.out.println("Do you want show tuesday? Y/N");
+		airport.setSunday(answer(scan));
+		System.out.println("Do you want show wedensday? Y/N");
+		airport.setSunday(answer(scan));
+		System.out.println("Do you want show thursday? Y/N");
+		airport.setSunday(answer(scan));
+		System.out.println("Do you want show friday? Y/N");
+		airport.setSunday(answer(scan));
+		System.out.println("Do you want show saturday? Y/N");
+		airport.setSunday(answer(scan));
+	}
+
+	public static boolean answer (Scanner scan) {
+		String answer;
+		boolean again=true;
+		while (again) {
+			answer=scan.nextLine();
+			if (answer.equalsIgnoreCase("y"))
+				return true;
+			else if (answer.equalsIgnoreCase("n")) 
+				return false;
+		}
+		return again;
 	}
 
 	// check Integer input and declined until possible input inserted

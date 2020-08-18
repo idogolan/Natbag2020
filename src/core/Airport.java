@@ -143,7 +143,6 @@ public class Airport {
 		for (int i = 1; i <= days.length; i++) {
 			if (days[i-1] != 0) {
 				for (int j = 0; j < showing.size(); j++) {
-					System.out.println(showing.get(j).getFlightDate().getDayOfWeek().getValue());
 					if (showing.get(j).getFlightDate().getDayOfWeek().getValue() == i) {
 						showing.remove(j);
 						j--;
