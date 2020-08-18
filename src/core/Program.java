@@ -153,31 +153,31 @@ public class Program {
 		return date;
 	}
 
-	public static void chooseDay (Scanner scan,Airport airport) {
-		System.out.println("Do you want show sunday? Y/N");
+	public static void chooseDay(Scanner scan, Airport airport) {
+		System.out.println("Do you want show Sunday? Y/N");
 		airport.setSunday(answer(scan));
-		System.out.println("Do you want show monday? Y/N");
-		airport.setSunday(answer(scan));
-		System.out.println("Do you want show tuesday? Y/N");
-		airport.setSunday(answer(scan));
-		System.out.println("Do you want show wedensday? Y/N");
-		airport.setSunday(answer(scan));
-		System.out.println("Do you want show thursday? Y/N");
-		airport.setSunday(answer(scan));
-		System.out.println("Do you want show friday? Y/N");
-		airport.setSunday(answer(scan));
-		System.out.println("Do you want show saturday? Y/N");
-		airport.setSunday(answer(scan));
+		System.out.println("Do you want show Monday? Y/N");
+		airport.setMonday(answer(scan));
+		System.out.println("Do you want show Tuesday? Y/N");
+		airport.setTuesday(answer(scan));
+		System.out.println("Do you want show Wednesday? Y/N");
+		airport.setWednesday(answer(scan));
+		System.out.println("Do you want show Thursday? Y/N");
+		airport.setThursday(answer(scan));
+		System.out.println("Do you want show Friday? Y/N");
+		airport.setFriday(answer(scan));
+		System.out.println("Do you want show Saturday? Y/N");
+		airport.setSaturday(answer(scan));
 	}
 
-	public static boolean answer (Scanner scan) {
+	public static boolean answer(Scanner scan) {
 		String answer;
-		boolean again=true;
+		boolean again = true;
 		while (again) {
-			answer=scan.nextLine();
+			answer = scan.nextLine();
 			if (answer.equalsIgnoreCase("y"))
 				return true;
-			else if (answer.equalsIgnoreCase("n")) 
+			else if (answer.equalsIgnoreCase("n"))
 				return false;
 		}
 		return again;
