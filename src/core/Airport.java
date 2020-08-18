@@ -92,7 +92,7 @@ public class Airport {
 
 	private void sortRangeOfDatesBegining() {
 		for (int i = 0; i < showing.size(); i++) {
-			if (showing.get(i).getFlightDate().compareTo(begining) > 0) {
+			if (showing.get(i).getFlightDate().compareTo(begining) < 0) {
 				showing.remove(i);
 				i--;
 			}
@@ -101,7 +101,7 @@ public class Airport {
 
 	private void sortRangeOfDatesEnd() {
 		for (int i = 0; i < showing.size(); i++) {
-			if (showing.get(i).getFlightDate().compareTo(end) < 0) {
+			if (showing.get(i).getFlightDate().compareTo(end) > 0) {
 				showing.remove(i);
 				i--;
 			}
@@ -141,8 +141,9 @@ public class Airport {
 
 	private void sortByDays() {
 		for (int i = 1; i <= days.length; i++) {
-			if (days[i - 1] != 0) {
+			if (days[i-1] != 0) {
 				for (int j = 0; j < showing.size(); j++) {
+					System.out.println(showing.get(j).getFlightDate().getDayOfWeek().getValue());
 					if (showing.get(j).getFlightDate().getDayOfWeek().getValue() == i) {
 						showing.remove(j);
 						j--;
@@ -158,7 +159,7 @@ public class Airport {
 		this.name = name;
 		return true;
 	}
-	
+
 	public void setRest() {
 		arrivals = true;
 		departures = true;
@@ -198,7 +199,7 @@ public class Airport {
 
 	public void setRangeOfDatesBegining(LocalDate begining) {
 		if (begining != null) {
-			this.begining = LocalDate.of(begining.getDayOfMonth(), begining.getMonthValue(), begining.getYear());
+			this.begining = begining;
 			rangeOfDatesBegining = true;
 			return;
 		}
@@ -207,7 +208,7 @@ public class Airport {
 
 	public void setRangeOfDatesEnd(LocalDate end) {
 		if (end != null) {
-			this.end = LocalDate.of(end.getDayOfMonth(), end.getMonthValue(), end.getYear());
+			this.end = end;
 			rangeOfDatesEnd = true;
 			return;
 		}
@@ -216,13 +217,21 @@ public class Airport {
 
 	public void setSunday(boolean show) {
 		if (!show) {
+			days[6] = 1;
+			return;
+		}
+		days[6] = 0;
+	}
+
+	public void setMonday(boolean show) {
+		if (!show) {
 			days[0] = 1;
 			return;
 		}
 		days[0] = 0;
 	}
 
-	public void setMonday(boolean show) {
+	public void setTuesday(boolean show) {
 		if (!show) {
 			days[1] = 1;
 			return;
@@ -230,7 +239,7 @@ public class Airport {
 		days[1] = 0;
 	}
 
-	public void setTuesday(boolean show) {
+	public void setWednesday(boolean show) {
 		if (!show) {
 			days[2] = 1;
 			return;
@@ -238,7 +247,7 @@ public class Airport {
 		days[2] = 0;
 	}
 
-	public void setWednesday(boolean show) {
+	public void setThursday(boolean show) {
 		if (!show) {
 			days[3] = 1;
 			return;
@@ -246,7 +255,7 @@ public class Airport {
 		days[3] = 0;
 	}
 
-	public void setThursday(boolean show) {
+	public void setFriday(boolean show) {
 		if (!show) {
 			days[4] = 1;
 			return;
@@ -254,20 +263,12 @@ public class Airport {
 		days[4] = 0;
 	}
 
-	public void setFriday(boolean show) {
+	public void setSaturday(boolean show) {
 		if (!show) {
 			days[5] = 1;
 			return;
 		}
 		days[5] = 0;
-	}
-
-	public void setSaturday(boolean show) {
-		if (!show) {
-			days[6] = 1;
-			return;
-		}
-		days[6] = 0;
 	}
 
 	public String getName() {
