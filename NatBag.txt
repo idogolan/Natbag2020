@@ -1,0 +1,10 @@
+NatBag
+1
+EL-AL
+ad321
+ISR
+BAR
+Departures
+2020 11 20
+23 50
+

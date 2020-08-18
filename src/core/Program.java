@@ -27,7 +27,7 @@ public class Program {
 		String str = scan.nextLine();
 		switch (str) {
 		case "1":
-			showMenu(airport);
+			showMenu(scan, airport);
 			return true;
 		case "2":
 			addFlight(scan, airport);
@@ -44,6 +44,47 @@ public class Program {
 		}
 	}
 
+	public static void showMenu(Scanner scan, Airport airport) {
+		printShow(airport);
+		String str = scan.nextLine();
+		boolean again = true;
+		while (again) {
+			switch (str) {
+			case "1":
+				airport.setArrivals(inputOptionCheck(scan));
+				again = true;
+			case "2":
+				airport.setDepartures(inputOptionCheck(scan));
+				again = true;
+			case "3":
+				System.out.println("Enter the company name");
+				airport.setCompany(scan.nextLine());
+				again = true;
+			case "4":
+				System.out.println("Enter the county name");
+				airport.setCountry(scan.nextLine());
+				again = true;
+			case "5":
+				LocalDate begining = createDate(scan);
+				airport.setRangeOfDatesBegining(begining);
+				again = true;
+			case "6":
+				LocalDate end = createDate(scan);
+				airport.setRangeOfDatesEnd(end);
+				again = true;
+			case "7":
+				//left to do 
+				again = true;
+			case "8":
+				airport.setRest();
+				again = false;
+			default:
+				System.out.println("Not a valid option: Please choose again");
+				again = true;
+			}
+		}
+	}
+
 	// print menu test for the user
 	public static void printMenu() {
 		System.out.println("----------------------------------------------------");
@@ -56,7 +97,7 @@ public class Program {
 		System.out.println("----------------------------------------------------");
 	}
 
-	public static void showMenu(Airport airport) {
+	public static void printShow(Airport airport) {
 		System.out.println("----------------------------------------------------");
 		System.out.println("Airport - " + airport.getName());
 		System.out.println("----------------------------------------------------");
@@ -69,14 +110,17 @@ public class Program {
 		System.out.println("4) Sort by county name");
 		System.out.println("5) Sort by start date");
 		System.out.println("6) Sort by end date");
-		System.out.println("7) Back to the main menu ");
+		System.out.println("7) Sort by days in the week");
+		System.out.println("8) Back to the main menu ");
 		System.out.println("----------------------------------------------------");
 	}
 
 	// making new flight using user input
 	public static void addFlight(Scanner scan, Airport airport) {
 		String start, end, company, number;
-		int year, month, day, hour, minute;
+		int hour, minute;
+		LocalDate date;
+		Time time;
 		System.out.println("Please enter number flight: ");
 		number = scan.nextLine();
 		System.out.println("Please enter the start location");
@@ -85,23 +129,28 @@ public class Program {
 		end = scan.nextLine();
 		System.out.println("Please enter the company name");
 		company = scan.nextLine();
+		date = createDate(scan);
+		System.out.println("Please enter the hour");
+		hour = inputOptionCheck(scan, 0, 23);
+		System.out.println("Please enter the minute");
+		minute = inputOptionCheck(scan, 0, 59);
+		time = new Time(hour, minute, 0);
+
+		airport.addFlight(start, end, date, time, number, company);
+		System.out.println("The flight added successfully to the list\n");
+	}
+
+	public static LocalDate createDate(Scanner scan) {
+		int year, month, day;
+		LocalDate date;
 		System.out.println("Please enter the year");
 		year = inputOptionCheck(scan, 1900, 2100);
 		System.out.println("Please enter the month");
 		month = inputOptionCheck(scan, 1, 12);
 		System.out.println("Please enter the day");
 		day = inputOptionCheck(scan, 1, 31);
-		System.out.println("Please enter the hour");
-		hour = inputOptionCheck(scan, 1, 60);
-		System.out.println("Please enter the minute");
-		minute = inputOptionCheck(scan, 1, 60);
-		LocalDate date;
-		Time time;
 		date = LocalDate.of(year, month, day);
-		time = new Time(hour, minute, 0);
-
-		airport.addFlight(start, end, date, time, number, company);
-		System.out.println("The flight added successfully to the list\n");
+		return date;
 	}
 
 	// check Integer input and declined until possible input inserted
@@ -121,5 +170,21 @@ public class Program {
 			}
 		}
 		return res;
+	}
+
+	public static boolean inputOptionCheck(Scanner scan) {
+		System.out.println("Enter S to show/nEnter H to hide");
+		String res;
+		boolean repeat = true;
+		while (repeat) {
+			res = scan.next();
+			if (res.equalsIgnoreCase("h") || res.equalsIgnoreCase("hide"))
+				return false;
+			else if (res.equalsIgnoreCase("s") || res.equalsIgnoreCase("show"))
+				return true;
+			else
+				System.out.println("not valid input: please try again (S/H)");
+		}
+		return true;
 	}
 }

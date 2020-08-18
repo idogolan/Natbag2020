@@ -158,6 +158,17 @@ public class Airport {
 		this.name = name;
 		return true;
 	}
+	
+	public void setRest() {
+		arrivals = true;
+		departures = true;
+		dateAndTime = true;
+		company = false;
+		rangeOfDatesBegining = false;
+		rangeOfDatesEnd = false;
+		days = new int[7];
+		country = false;
+	}
 
 	public void setArrivals(boolean arrivals) {
 		this.arrivals = arrivals;
