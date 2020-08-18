@@ -1,56 +1,54 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
-
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 import org.junit.Test;
-
+import core.Airport;
 import core.Flight;
-import core.Program;
 
 public class FlightsSortByDirection {
-	@Test
-	public void departuresTest() { 
-		ArrayList<Flight> flightsForTest = new ArrayList<>();
+	//@Test
+	public void departuresTest() {
+		Airport air = new Airport("Test");
 		Flight fly1 = new Flight("ISR", "THI", LocalDate.of(2020, 4, 10), new Time(5, 30, 0), "ED 927", "El-Al");
 		Flight fly2 = new Flight("ISR", "MOS", LocalDate.of(2020, 4, 8), new Time(5, 30, 0), "ES 845", "El-Al");
 		Flight fly3 = new Flight("UK", "ISR", LocalDate.of(2020, 4, 9), new Time(5, 30, 0), "AF 233", "Arkia");
-		flightsForTest.add(fly1);
-		flightsForTest.add(fly2);
-		flightsForTest.add(fly3);
+		air.addFlight(fly1);
+		air.addFlight(fly2);
+		air.addFlight(fly3);
 
-		ArrayList<Flight> results = new ArrayList<>(Program.sortByDirection(flightsForTest, 1));
+		air.setDepartures(true);
+		air.setArrivals(false);
 
 		StringBuffer expectedResult = new StringBuffer();
 		expectedResult.append("[");
-		expectedResult.append(fly1);
-		expectedResult.append(", ");
 		expectedResult.append(fly2);
+		expectedResult.append(", ");
+		expectedResult.append(fly1);
 		expectedResult.append("]");
 
-		assertEquals(expectedResult.toString(), results.toString());
+		assertEquals(expectedResult.toString(), air.showFlights().toString());
 	}
-	
+
 	@Test
-	public void arrivalsTest() { 
-		ArrayList<Flight> flightsForTest = new ArrayList<>();
+	public void arrivalsTest() {
+		Airport air = new Airport("Test");
 		Flight fly1 = new Flight("ISR", "THI", LocalDate.of(2020, 4, 10), new Time(5, 30, 0), "ED 927", "El-Al");
 		Flight fly2 = new Flight("ISR", "MOS", LocalDate.of(2020, 4, 8), new Time(5, 30, 0), "ES 845", "El-Al");
 		Flight fly3 = new Flight("UK", "ISR", LocalDate.of(2020, 4, 9), new Time(5, 30, 0), "AF 233", "Arkia");
-		flightsForTest.add(fly1);
-		flightsForTest.add(fly2);
-		flightsForTest.add(fly3);
+		air.addFlight(fly1);
+		air.addFlight(fly2);
+		air.addFlight(fly3);
 
-		ArrayList<Flight> results = new ArrayList<>(Program.sortByDirection(flightsForTest, 2));
+		air.setDepartures(false);
+		air.setArrivals(true);
 
 		StringBuffer expectedResult = new StringBuffer();
 		expectedResult.append("[");
 		expectedResult.append(fly3);
 		expectedResult.append("]");
 
-		assertEquals(expectedResult.toString(), results.toString());
+		assertEquals(expectedResult.toString(), air.showFlights().toString());
 	}
 }

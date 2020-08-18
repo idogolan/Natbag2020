@@ -1,96 +1,80 @@
 package core;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
-
 import javax.annotation.processing.FilerException;
 
 public class Program {
 
 	public static void main(String[] args) throws FileNotFoundException, FilerException {
 		Scanner scan = new Scanner(System.in);
-		ArrayList<Flight> flights = new ArrayList<>();
+		Airport natbag = new Airport("NatBag");
+		try {
+			natbag.load();
+		} catch (Exception e) {
+			System.out.println("no current data available about this airport");
+		}
 		boolean stayInTheMenu = true;
 		while (stayInTheMenu) {
-			stayInTheMenu = menu(scan, flights);
+			stayInTheMenu = menu(scan, natbag);
 		}
 	}
 
-	public static boolean menu(Scanner scan, ArrayList<Flight> flights) throws FileNotFoundException, FilerException {
+	public static boolean menu(Scanner scan, Airport airport) throws FileNotFoundException, FilerException {
 		printMenu();
 		String str = scan.nextLine();
 		switch (str) {
 		case "1":
-			if (flights.isEmpty())
-				System.out.println("There is no flights available \n");
-			else
-				System.out.println(flights + "\n");
+			showMenu(airport);
 			return true;
 		case "2":
-			addFlight(scan, flights);
+			addFlight(scan, airport);
 			return true;
 		case "3":
-			sortByDateAndTime(flights);
-			System.out.println("Sorted by date and time:");
-			System.out.println(flights + "\n");
+			airport.save();
 			return true;
 		case "4":
-			read("fligths.txt", flights);
-			return true;
-		case "5":
-			save(flights);
-			return true;
-		case "6":
-			System.out.println("sya");
+			System.out.println("The program is closed ");
 			return false;
 		default:
 			System.out.println("Not a valid option: Please choose again");
 			return true;
 		}
 	}
-	
-	//sort the current list by date and time 
-	public static void sortByDateAndTime(ArrayList<Flight> flights) {
-		Comparator<Flight> comparatorByDate = new Comparator<Flight>() {
-			public int compare(Flight o1, Flight o2) {
-				return o1.compareTo(o2);
-			}
-		};
-		Collections.sort(flights, comparatorByDate);
-	}
-	
-	// return list by direction, 1 for Departures, 2 for Arrivals, other for both
-	public static ArrayList<Flight> sortByDirection(ArrayList<Flight> flights, int kind) {
-		ArrayList<Flight> list = new ArrayList<Flight>();
-		for(Flight f : flights) {
-			if(f.getDirection().equals(Flight.DEPARTURES) && kind!=2)
-				list.add(f);
-			if(f.getDirection().equals(Flight.ARRIVALS) && kind != 1)
-				list.add(f);
-		}
-		return list;
-	}
-	
-	// print menu test for the user 
+
+	// print menu test for the user
 	public static void printMenu() {
-		System.out.println("Menu:");
-		System.out.println("1)Show the flight list");
-		System.out.println("2)Add new flight");
-		System.out.println("3)Show the flight list sorted by date and time");
-		System.out.println("4)Make new list of flight from a file");
-		System.out.println("5)Save the list to a file");
-		System.out.println("6)exit");
+		System.out.println("----------------------------------------------------");
+		System.out.println("Main Menu:");
+		System.out.println("Choose an option by number");
+		System.out.println("1) Show all the available flights");
+		System.out.println("2) Add new flight");
+		System.out.println("3) Save airport data to a file");
+		System.out.println("4) exit");
+		System.out.println("----------------------------------------------------");
 	}
 
-	// making new flight using user input 
-	public static void addFlight(Scanner scan, ArrayList<Flight> flights) {
+	public static void showMenu(Airport airport) {
+		System.out.println("----------------------------------------------------");
+		System.out.println("Airport - " + airport.getName());
+		System.out.println("----------------------------------------------------");
+		System.out.println(airport.showFlights());
+		System.out.println("----------------------------------------------------");
+		System.out.println("Choose sorting option by number");
+		System.out.println("1) Show/Hide Arrivals");
+		System.out.println("2) Show/Hide Departures");
+		System.out.println("3) Sort by company name");
+		System.out.println("4) Sort by county name");
+		System.out.println("5) Sort by start date");
+		System.out.println("6) Sort by end date");
+		System.out.println("7) Back to the main menu ");
+		System.out.println("----------------------------------------------------");
+	}
+
+	// making new flight using user input
+	public static void addFlight(Scanner scan, Airport airport) {
 		String start, end, company, number;
 		int year, month, day, hour, minute;
 		System.out.println("Please enter number flight: ");
@@ -104,47 +88,22 @@ public class Program {
 		System.out.println("Please enter the year");
 		year = inputOptionCheck(scan, 1900, 2100);
 		System.out.println("Please enter the month");
-		month = inputOptionCheck(scan, 1,12);
+		month = inputOptionCheck(scan, 1, 12);
 		System.out.println("Please enter the day");
-		day = inputOptionCheck(scan,1,31);
+		day = inputOptionCheck(scan, 1, 31);
 		System.out.println("Please enter the hour");
-		hour = inputOptionCheck(scan,1,60);
+		hour = inputOptionCheck(scan, 1, 60);
 		System.out.println("Please enter the minute");
-		minute = inputOptionCheck(scan,1,60);
+		minute = inputOptionCheck(scan, 1, 60);
 		LocalDate date;
 		Time time;
 		date = LocalDate.of(year, month, day);
 		time = new Time(hour, minute, 0);
 
-		flights.add(new Flight(start, end, date, time, number, company));
+		airport.addFlight(start, end, date, time, number, company);
 		System.out.println("The flight added successfully to the list\n");
 	}
 
-	// save the list to the file
-	public static void save(ArrayList<Flight> flights) throws FileNotFoundException {
-		File f = new File("fligths.txt");
-		PrintWriter pw = new PrintWriter(f);
-		pw.println(flights.size());
-		for (Flight fly : flights) {
-			fly.Save(pw);
-			pw.println("");
-		}
-		pw.close();
-	}
-
-	// read from the file and making new list from it
-	public static void read(String fileName, ArrayList<Flight> list) throws FileNotFoundException, FilerException {
-		list.clear();
-		File f = new File(fileName);
-		Scanner s = new Scanner(f);
-		int sum = s.nextInt();
-		for (int i = 0; i < sum; i++) {
-			s.nextLine();
-			list.add(new Flight(f, s));
-			s.nextLine();
-		}
-	}
-	
 	// check Integer input and declined until possible input inserted
 	// making sure the input is Integer type and between Min and Max variables
 	public static int inputOptionCheck(Scanner scan, int min, int max) {
@@ -163,23 +122,4 @@ public class Program {
 		}
 		return res;
 	}
-	
-	public static ArrayList<Flight> sortByDate ( ArrayList<Flight> flights,LocalDate begining, LocalDate end){
-		ArrayList<Flight> newList = new ArrayList<Flight>();
-		for(Flight f : flights) {
-			if ((f.getFlightDate().compareTo(begining)<=0) && (f.getFlightDate().compareTo(end)>=0))
-				newList.add(f);
-		}
-		return newList;
-	}
-	
-	public static ArrayList<Flight> sortByCompany (ArrayList<Flight> flights, String company){
-		ArrayList<Flight> newList = new ArrayList<Flight>();
-		for(Flight f : flights) {
-			if (f.getCompany().equals(company))
-				newList.add(f);
-		}
-		return newList;
-	}
-	
 }

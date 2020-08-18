@@ -45,9 +45,16 @@ public class Airport {
 		return true;
 	}
 
+	public boolean addFlight(Flight flight) {
+		if (flight == null)
+			return false;
+		flightList.add(flight);
+		return true;
+	}
+
 	// save the airport to the file
 	public void save() throws FileNotFoundException {
-		File f = new File("fligths.txt");
+		File f = new File(name + ".txt");
 		PrintWriter pw = new PrintWriter(f);
 		pw.println(name);
 		pw.println(flightList.size());
@@ -59,7 +66,8 @@ public class Airport {
 	}
 
 	// load from the file and changing the list accordingly
-	public void load(String fileName) throws FileNotFoundException, FilerException {
+	public void load() throws FileNotFoundException, FilerException {
+		String fileName = name + ".txt";
 		flightList.clear();
 		File f = new File(fileName);
 		Scanner s = new Scanner(f);
@@ -83,48 +91,62 @@ public class Airport {
 	}
 
 	private void sortRangeOfDatesBegining() {
-		for (Flight f : showing) {
-			if (f.getFlightDate().compareTo(begining) > 0)
-				showing.remove(f);
+		for (int i = 0; i < showing.size(); i++) {
+			if (showing.get(i).getFlightDate().compareTo(begining) > 0) {
+				showing.remove(i);
+				i--;
+			}
 		}
 	}
 
 	private void sortRangeOfDatesEnd() {
-		for (Flight f : showing) {
-			if (f.getFlightDate().compareTo(end) < 0)
-				showing.remove(f);
+		for (int i = 0; i < showing.size(); i++) {
+			if (showing.get(i).getFlightDate().compareTo(end) < 0) {
+				showing.remove(i);
+				i--;
+			}
 		}
 	}
 
 	private void sortByDirection() {
-		for (Flight f : showing) {
-			if (!arrivals && f.getDirection().equals("Arrivals"))
-				showing.remove(f);
-			if (!departures && f.getDirection().equals("Departures"))
-				showing.remove(f);
+		for (int i = 0; i < showing.size(); i++) {
+			if (!arrivals && showing.get(i).getDirection().equalsIgnoreCase("Arrivals")) {
+				showing.remove(i);
+				i--;
+			}
+			if (!departures && showing.get(i).getDirection().equals("Departures")) {
+				showing.remove(i);
+				i--;
+			}
 		}
 	}
 
 	private void sortByCompany() {
-		for (Flight f : showing) {
-			if (!f.getCompany().equals(strCompany))
-				showing.remove(f);
+		for (int i = 0; i < showing.size(); i++) {
+			if (!showing.get(i).getCompany().equals(strCompany)) {
+				showing.remove(i);
+				i--;
+			}
 		}
 	}
 
 	private void sortByCountry() {
-		for (Flight f : showing) {
-			if (!f.getEndLocation().equals(strCountry))
-				showing.remove(f);
+		for (int i = 0; i < showing.size(); i++) {
+			if (!showing.get(i).getEndLocation().equals(strCountry)) {
+				showing.remove(i);
+				i--;
+			}
 		}
 	}
 
 	private void sortByDays() {
 		for (int i = 1; i <= days.length; i++) {
 			if (days[i - 1] != 0) {
-				for (Flight f : showing) {
-					if (f.getFlightDate().getDayOfWeek().getValue() == i)
-						showing.remove(f);
+				for (int j = 0; j < showing.size(); j++) {
+					if (showing.get(j).getFlightDate().getDayOfWeek().getValue() == i) {
+						showing.remove(j);
+						j--;
+					}
 				}
 			}
 		}
