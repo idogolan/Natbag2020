@@ -1,6 +1,7 @@
 package core;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -8,7 +9,7 @@ import javax.annotation.processing.FilerException;
 
 public class Program {
 
-	public static void main(String[] args) throws FileNotFoundException, FilerException {
+	public static void main(String[] args) throws FileNotFoundException, FilerException, IOException {
 		Scanner scan = new Scanner(System.in);
 		Airport natbag = new Airport("NatBag");
 		try {
@@ -16,9 +17,41 @@ public class Program {
 		} catch (Exception e) {
 			System.out.println("no current data available about this airport");
 		}
-		boolean stayInTheMenu = true;
-		while (stayInTheMenu) {
-			stayInTheMenu = menu(scan, natbag);
+
+		if (args.length > 16) {
+			try {
+				boolean isHtml = args[0].equalsIgnoreCase("html");
+				boolean isDepartures = args[1].equalsIgnoreCase("Departures");
+				LocalDate startDate = LocalDate.of(Integer.parseInt(args[6]), Integer.parseInt(args[5]),
+						Integer.parseInt(args[4]));
+				LocalDate endDate = LocalDate.of(Integer.parseInt(args[9]), Integer.parseInt(args[8]),
+						Integer.parseInt(args[7]));
+				if (isHtml) {
+					natbag.setDepartures(isDepartures);
+					natbag.setArrivals(!isDepartures);
+					natbag.setCompany(args[2]);
+					natbag.setCountry(args[3]);
+					natbag.setRangeOfDatesBegining(startDate);
+					natbag.setRangeOfDatesEnd(endDate);
+					natbag.setSunday(args[10].equalsIgnoreCase("ture"));
+					natbag.setMonday(args[11].equalsIgnoreCase("ture"));
+					natbag.setTuesday(args[12].equalsIgnoreCase("ture"));
+					natbag.setWednesday(args[13].equalsIgnoreCase("ture"));
+					natbag.setThursday(args[14].equalsIgnoreCase("ture"));
+					natbag.setFriday(args[15].equalsIgnoreCase("ture"));
+					natbag.setSaturday(args[16].equalsIgnoreCase("ture"));
+					System.out.println("<br>");
+					System.out.println(natbag.showFlights());
+				}
+			} catch (Exception e) {
+				System.out.println("<br>");
+				System.out.println(natbag.showFlights());
+			}
+		} else {
+			boolean stayInTheMenu = true;
+			while (stayInTheMenu) {
+				stayInTheMenu = menu(scan, natbag);
+			}
 		}
 	}
 
