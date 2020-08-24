@@ -18,7 +18,7 @@ public class Program {
 			System.out.println("no current data available about this airport");
 		}
 
-		if (args.length >0) {
+		if (args.length > 0) {
 			try {
 				boolean isHtml = args[0].equalsIgnoreCase("html");
 				boolean isDepartures = args[1].equalsIgnoreCase("Departures");
@@ -48,9 +48,7 @@ public class Program {
 				System.out.println(natbag.showFlights());
 			}
 		} else {
-			boolean stayInTheMenu = true;
-			while (stayInTheMenu) {
-				stayInTheMenu = menu(scan, natbag);
+			while (menu(scan, natbag)) {
 			}
 		}
 	}
