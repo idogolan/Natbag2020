@@ -18,7 +18,7 @@ public class Program {
 			System.out.println("no current data available about this airport");
 		}
 
-		if (args.length > 16) {
+		if (args.length >0) {
 			try {
 				boolean isHtml = args[0].equalsIgnoreCase("html");
 				boolean isDepartures = args[1].equalsIgnoreCase("Departures");
@@ -33,13 +33,13 @@ public class Program {
 					natbag.setCountry(args[3]);
 					natbag.setRangeOfDatesBegining(startDate);
 					natbag.setRangeOfDatesEnd(endDate);
-					natbag.setSunday(args[10].equalsIgnoreCase("ture"));
-					natbag.setMonday(args[11].equalsIgnoreCase("ture"));
-					natbag.setTuesday(args[12].equalsIgnoreCase("ture"));
-					natbag.setWednesday(args[13].equalsIgnoreCase("ture"));
-					natbag.setThursday(args[14].equalsIgnoreCase("ture"));
-					natbag.setFriday(args[15].equalsIgnoreCase("ture"));
-					natbag.setSaturday(args[16].equalsIgnoreCase("ture"));
+					natbag.setSunday(args[10].equalsIgnoreCase("true"));
+					natbag.setMonday(args[11].equalsIgnoreCase("true"));
+					natbag.setTuesday(args[12].equalsIgnoreCase("true"));
+					natbag.setWednesday(args[13].equalsIgnoreCase("true"));
+					natbag.setThursday(args[14].equalsIgnoreCase("true"));
+					natbag.setFriday(args[15].equalsIgnoreCase("true"));
+					natbag.setSaturday(args[16].equalsIgnoreCase("true"));
 					System.out.println("<br>");
 					System.out.println(natbag.showFlights());
 				}
@@ -250,4 +250,8 @@ public class Program {
 		}
 		return true;
 	}
+	
+	//http://localhost:8000/departures?outformat=html&company=El-Al&country=MOS&day1=2&month1=2&year1=2020&day2=5&month2=9&year2=2020&sunday=true&monday=true&tuesday=true&wednesday=true&thursday=true&friday=true&saturday=true
+	//http://localhost:8000/departures?outformat=html&company=El-Al&country=ISR&day1=20&month1=11&year1=2020&day2=5&month2=9&year2=2020&sunday=true&monday=true&tuesday=true&wednesday=true&thursday=true&friday=true&saturday
+
 }
