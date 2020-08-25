@@ -58,7 +58,8 @@ public class Program {
 		String str = scan.nextLine();
 		switch (str) {
 		case "1":
-			showMenu(scan, airport);
+			while (showMenu(scan, airport)) {
+			}
 			return true;
 		case "2":
 			addFlight(scan, airport);
@@ -75,52 +76,41 @@ public class Program {
 		}
 	}
 
-	public static void showMenu(Scanner scan, Airport airport) {
-		boolean again = true;
-		while (again) {
-			printShow(airport);
-			String str = scan.nextLine();
-			switch (str) {
-			case "1":
-				airport.setArrivals(inputOptionCheck(scan));
-				again = true;
-				break;
-			case "2":
-				airport.setDepartures(inputOptionCheck(scan));
-				again = true;
-				break;
-			case "3":
-				System.out.println("Enter the company name");
-				airport.setCompany(scan.nextLine());
-				again = true;
-				break;
-			case "4":
-				System.out.println("Enter the country name");
-				airport.setCountry(scan.nextLine());
-				again = true;
-				break;
-			case "5":
-				LocalDate begining = createDate(scan);
-				airport.setRangeOfDatesBegining(begining);
-				again = true;
-				break;
-			case "6":
-				LocalDate end = createDate(scan);
-				airport.setRangeOfDatesEnd(end);
-				again = true;
-				break;
-			case "7":
-				chooseDay(scan, airport);
-				again = true;
-				break;
-			case "8":
-				airport.setRest();
-				again = false;
-				break;
-			default:
-				System.out.println("Not a valid option: Please choose again");
-				again = true;
-			}
+	public static boolean showMenu(Scanner scan, Airport airport) {
+		printShow(airport);
+		String str = scan.nextLine();
+		switch (str) {
+		case "1":
+			airport.setArrivals(inputOptionCheck(scan));
+			return true;
+		case "2":
+			airport.setDepartures(inputOptionCheck(scan));
+			return true;
+		case "3":
+			System.out.println("Enter the company name");
+			airport.setCompany(scan.nextLine());
+			return true;
+		case "4":
+			System.out.println("Enter the country name");
+			airport.setCountry(scan.nextLine());
+			return true;
+		case "5":
+			LocalDate begining = createDate(scan);
+			airport.setRangeOfDatesBegining(begining);
+			return true;
+		case "6":
+			LocalDate end = createDate(scan);
+			airport.setRangeOfDatesEnd(end);
+			return true;
+		case "7":
+			chooseDay(scan, airport);
+			return true;
+		case "8":
+			airport.setRest();
+			return false;
+		default:
+			System.out.println("Not a valid option: Please choose again");
+			return true;
 		}
 	}
 
@@ -153,7 +143,6 @@ public class Program {
 		System.out.println("8) Back to the main menu ");
 		System.out.println("----------------------------------------------------");
 	}
-	
 
 	// making new flight using user input
 	public static void addFlight(Scanner scan, Airport airport) {
@@ -243,7 +232,7 @@ public class Program {
 	}
 
 	public static boolean inputOptionCheck(Scanner scan) {
-		System.out.println("Enter S to show\nEnter H to hide");
+		System.out.println("Enter: S/H to show/hide");
 		String res;
 		boolean repeat = true;
 		while (repeat) {
@@ -257,8 +246,4 @@ public class Program {
 		}
 		return true;
 	}
-
-	//http://localhost:8000/departures?outformat=html&company=El-Al&country=MOS&day1=2&month1=2&year1=2020&day2=5&month2=9&year2=2020&sunday=true&monday=true&tuesday=true&wednesday=true&thursday=true&friday=true&saturday=true
-	//http://localhost:8000/departures?outformat=html&company=El-Al&country=ISR&day1=20&month1=11&year1=2020&day2=5&month2=9&year2=2020&sunday=true&monday=true&tuesday=true&wednesday=true&thursday=true&friday=true&saturday
-
 }
