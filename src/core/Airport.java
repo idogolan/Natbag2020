@@ -66,8 +66,13 @@ public class Airport {
 	}
 
 	// load from the file and changing the list accordingly
-	public void load() throws FileNotFoundException, FilerException {
-		String fileName = name + ".txt";
+	public void load(String[] args) throws FileNotFoundException, FilerException {
+		String fileName = "";
+		if (args.length > 0) {//need to fix the address problem
+			fileName = "C:\\Users\\Roman Michailov\\OneDrive\\Object Oriented Programming\\Development Tools Course\\Natbag2020-git\\Natbag2020\\";
+		}
+		fileName = fileName + name + ".txt";
+
 		flightList.clear();
 		File f = new File(fileName);
 		Scanner s = new Scanner(f);
@@ -141,7 +146,7 @@ public class Airport {
 
 	private void sortByDays() {
 		for (int i = 1; i <= days.length; i++) {
-			if (days[i-1] != 0) {
+			if (days[i - 1] != 0) {
 				for (int j = 0; j < showing.size(); j++) {
 					if (showing.get(j).getFlightDate().getDayOfWeek().getValue() == i) {
 						showing.remove(j);

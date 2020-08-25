@@ -13,7 +13,7 @@ public class Program {
 		Scanner scan = new Scanner(System.in);
 		Airport natbag = new Airport("NatBag");
 		try {
-			natbag.load();
+			natbag.load(args);
 		} catch (Exception e) {
 			System.out.println("no current data available about this airport");
 		}
@@ -29,23 +29,64 @@ public class Program {
 				if (isHtml) {
 					natbag.setDepartures(isDepartures);
 					natbag.setArrivals(!isDepartures);
+					if (isDepartures)
+						System.out.println("Departures - ");
+					else
+						System.out.println("Arrivals - ");
+					System.out.println("Fights with " + args[2]);
+					System.out.println(" To " + args[3] + "<br>");
 					natbag.setCompany(args[2]);
 					natbag.setCountry(args[3]);
+
+					System.out.println("Between: " + startDate + " - " + endDate + "<br>");
 					natbag.setRangeOfDatesBegining(startDate);
 					natbag.setRangeOfDatesEnd(endDate);
-					natbag.setSunday(args[10].equalsIgnoreCase("true"));
-					natbag.setMonday(args[11].equalsIgnoreCase("true"));
-					natbag.setTuesday(args[12].equalsIgnoreCase("true"));
-					natbag.setWednesday(args[13].equalsIgnoreCase("true"));
-					natbag.setThursday(args[14].equalsIgnoreCase("true"));
-					natbag.setFriday(args[15].equalsIgnoreCase("true"));
-					natbag.setSaturday(args[16].equalsIgnoreCase("true"));
-					System.out.println("<br>");
-					System.out.println(natbag.showFlights());
+
+					System.out.println("On: ");
+					if (args[10].equalsIgnoreCase("true"))
+						System.out.println("Sunday, ");
+					else
+						natbag.setSunday(args[10].equalsIgnoreCase("true"));
+					if (args[11].equalsIgnoreCase("true"))
+						System.out.println("Monday, ");
+					else
+						natbag.setMonday(args[11].equalsIgnoreCase("true"));
+					if (args[10].equalsIgnoreCase("true"))
+						System.out.println("Tuesday, ");
+					else
+						natbag.setTuesday(args[12].equalsIgnoreCase("true"));
+					if (args[10].equalsIgnoreCase("true"))
+						System.out.println("Wednesday, ");
+					else
+						natbag.setWednesday(args[13].equalsIgnoreCase("true"));
+					if (args[10].equalsIgnoreCase("true"))
+						System.out.println("Thursday, ");
+					else
+						natbag.setThursday(args[14].equalsIgnoreCase("true"));
+					if (args[10].equalsIgnoreCase("true"))
+						System.out.println("Friday, ");
+					else
+						natbag.setFriday(args[15].equalsIgnoreCase("true"));
+					if (args[10].equalsIgnoreCase("true"))
+						System.out.println("Saturday");
+					else
+						natbag.setSaturday(args[16].equalsIgnoreCase("true"));
+
+					System.out.println("<br><br>");
+					int index = 1;
+					for (Flight f : natbag.showFlights()) {
+						System.out.println(index + ") " + f + "<br>");
+						index++;
+					}
 				}
 			} catch (Exception e) {
-				System.out.println("<br>");
-				System.out.println(natbag.showFlights());
+				System.out.println("Input Error: This is the full list: <br>");
+				natbag.setRest();
+				int index = 1;
+				for (Flight f : natbag.showFlights()) {
+					System.out.println(index + ") " + f + "<br>");
+					index++;
+				}
 			}
 		} else {
 			while (menu(scan, natbag)) {

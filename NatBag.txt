@@ -1,6 +1,6 @@
 NatBag
 12
-EL-AL
+El-Al
 AD 321
 ISRAEL
 BARCELONA
@@ -64,7 +64,7 @@ Arrivals
 2020 10 20
 6 10
 
-EL-AL
+El-Al
 DL 235
 ISRAEL
 NEW YORK
@@ -72,7 +72,7 @@ Departures
 2020 10 20
 22 50
 
-EL-AL
+El-Al
 UA 091
 ISRAEL
 NEWARK
@@ -80,7 +80,7 @@ Departures
 2020 11 15
 21 50
 
-EL-AL
+El-Al
 ET 405
 ISRAEL
 ADDIS ABABA
@@ -88,7 +88,7 @@ Departures
 2020 9 20
 20 50
 
-EL-AL
+El-Al
 PC 786
 ISRAEL
 ISTANBUL
