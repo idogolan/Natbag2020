@@ -46,31 +46,31 @@ public class Program {
 					if (args[10].equalsIgnoreCase("true"))
 						System.out.println("Sunday, ");
 					else
-						natbag.setSunday(args[10].equalsIgnoreCase("true"));
+						natbag.setSunday(false);
 					if (args[11].equalsIgnoreCase("true"))
 						System.out.println("Monday, ");
 					else
-						natbag.setMonday(args[11].equalsIgnoreCase("true"));
+						natbag.setMonday(false);
 					if (args[10].equalsIgnoreCase("true"))
 						System.out.println("Tuesday, ");
 					else
-						natbag.setTuesday(args[12].equalsIgnoreCase("true"));
+						natbag.setTuesday(false);
 					if (args[10].equalsIgnoreCase("true"))
 						System.out.println("Wednesday, ");
 					else
-						natbag.setWednesday(args[13].equalsIgnoreCase("true"));
+						natbag.setWednesday(false);
 					if (args[10].equalsIgnoreCase("true"))
 						System.out.println("Thursday, ");
 					else
-						natbag.setThursday(args[14].equalsIgnoreCase("true"));
+						natbag.setThursday(false);
 					if (args[10].equalsIgnoreCase("true"))
 						System.out.println("Friday, ");
 					else
-						natbag.setFriday(args[15].equalsIgnoreCase("true"));
+						natbag.setFriday(false);
 					if (args[10].equalsIgnoreCase("true"))
 						System.out.println("Saturday");
 					else
-						natbag.setSaturday(args[16].equalsIgnoreCase("true"));
+						natbag.setSaturday(false);
 
 					System.out.println("<br><br>");
 					int index = 1;
