@@ -70,6 +70,8 @@ public class Airport {
 		String fileName = "";
 		if (args.length > 0) {//need to fix the address problem
 			fileName = "C:\\Users\\Roman Michailov\\OneDrive\\Object Oriented Programming\\Development Tools Course\\Natbag2020-git\\Natbag2020\\";
+//			fileName = "C:\\Users\\יובל\\eclipse-workspace\\Nattbag2020\\Natbag2020\\";
+
 		}
 		fileName = fileName + name + ".txt";
 

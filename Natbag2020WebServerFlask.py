@@ -8,6 +8,7 @@ app = Flask("Natbag2020")
 def allflights(direction): #need to fix the address problem
     return subprocess.check_output(["java", "-classpath",
                                     r"C:\Users\Roman Michailov\OneDrive\Object Oriented Programming\Development Tools Course\Natbag2020-git\Natbag2020\bin", "core.Program",
+                                    #r"C:\Users\יובל\eclipse-workspace\Nattbag2020\Natbag2020\bin"
                                     request.args.get('outformat'), direction,  # check if departures is args[1]
                                     request.args.get('company'), request.args.get('country'),
                                     request.args.get('day1'), request.args.get('month1'),
