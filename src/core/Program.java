@@ -51,23 +51,23 @@ public class Program {
 						System.out.println("Monday, ");
 					else
 						natbag.setMonday(false);
-					if (args[10].equalsIgnoreCase("true"))
+					if (args[12].equalsIgnoreCase("true"))
 						System.out.println("Tuesday, ");
 					else
 						natbag.setTuesday(false);
-					if (args[10].equalsIgnoreCase("true"))
+					if (args[13].equalsIgnoreCase("true"))
 						System.out.println("Wednesday, ");
 					else
 						natbag.setWednesday(false);
-					if (args[10].equalsIgnoreCase("true"))
+					if (args[14].equalsIgnoreCase("true"))
 						System.out.println("Thursday, ");
 					else
 						natbag.setThursday(false);
-					if (args[10].equalsIgnoreCase("true"))
+					if (args[15].equalsIgnoreCase("true"))
 						System.out.println("Friday, ");
 					else
 						natbag.setFriday(false);
-					if (args[10].equalsIgnoreCase("true"))
+					if (args[16].equalsIgnoreCase("true"))
 						System.out.println("Saturday");
 					else
 						natbag.setSaturday(false);
